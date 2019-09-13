@@ -54,7 +54,7 @@ server.get('/projects', (req, res) => {
 });
 
 server.post('/projects/:id/tasks', (req, res) => {
-  db.createTask(req.body)
+  db.createTask({...req.body, project: req.params.id})
   .then(dbRes => {
     res.status(202).send();
   })
@@ -65,9 +65,12 @@ server.post('/projects/:id/tasks', (req, res) => {
 });
 
 server.get('/projects/:id/tasks', (req, res) => {
-  db.projectTasks()
-  .then(dbRes => {
-    res.json(dbRes);
+  db.projectTasks(req.params.id)
+  .then(tasks => {
+    const validTasks = tasks.map(task => {
+      return {...task, completed: task.completed === 1 };
+    });
+    res.json(validTasks);
   })
   .catch(err => {
     console.log(err);
