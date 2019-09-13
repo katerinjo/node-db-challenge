@@ -8,6 +8,11 @@ function allResources() {
   return db('resources').select();
 }
 
+function createResource(dat) {
+  return db('resources').insert(dat);
+}
+
 module.exports = {
-  allResources
+  allResources,
+  createResource
 };
