@@ -12,7 +12,20 @@ function createResource(dat) {
   return db('resources').insert(dat);
 }
 
+function createProject(dat) {
+  const validDat = {...dat};
+  validDat.completed = validDat.completed || false;
+  console.log('validDat', validDat)
+  return db('projects').insert(validDat);
+}
+
+function allProjects() {
+  return db('projects').select();
+}
+
 module.exports = {
   allResources,
-  createResource
+  createResource,
+  createProject,
+  allProjects
 };
