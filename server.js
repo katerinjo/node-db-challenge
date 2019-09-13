@@ -1,13 +1,13 @@
 const express = require('express');
 
-const db = require('./data/dbConfig');
+const db = require('./data/dbInterface');
 
 const server = express();
 
 server.use(express.json());
 
 server.get('/resources', (req, res) => {
-  db.find()
+  db.allResources()
   .then(resources => {
     res.json(resources);
   })
