@@ -53,4 +53,26 @@ server.get('/projects', (req, res) => {
   });
 });
 
+server.post('/projects/:id/tasks', (req, res) => {
+  db.createTask(req.body)
+  .then(dbRes => {
+    res.status(202).send();
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({ message: 'Failed to post task' });
+  });
+});
+
+server.get('/projects/:id/tasks', (req, res) => {
+  db.projectTasks()
+  .then(dbRes => {
+    res.json(dbRes);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({ message: 'Failed to get tasks' });
+  });
+});
+
 module.exports = server;
